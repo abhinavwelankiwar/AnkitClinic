@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <h1 class="mt-4">Manage Patients</h1>
+    <div class="card" id="manage_patient_card">
+      <div class="card-header border-0">
+        <div class="row">
+          <div class="col-6">
+            <h3 class="mb-0">patients</h3>
+          </div>
+  
+        </div>
+      </div>
+      <!-- Light table -->
+      <div class="table-responsive">
+        <table class="table table-flush align-items-center">
+          <thead class="thead-light">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Date Of Birth</th>
+              <th>Approved</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of patients">
+              <td class="table-user">
+                <img *ngIf="patient.gender=='Male'" src="../../assets/img/patient-male.png" class="avatar rounded-circle mr-3">
+                <img *ngIf="patient.gender=='Female'" src="../../assets/img/patient-female.png"
+                  class="avatar rounded-circle mr-3">
+                <b>{{patient.firstName}} {{patient.lastName}}</b>
+              </td>
+              <td>
+                <span class="text-muted">{{patient.emailId}}</span>
+              </td>
+              <td>
+                <span class="text-muted">{{patient.contactNumber}}</span>
+              </td>
+              <td>
+                <span class="text-muted">{{patient.dateOfBirth | date:"dd MMM yyyy"}}</span>
+              </td>
+              <td>
+                <label *ngIf="patient.approve" class="custom-toggle custom-toggle-success">
+                  <input type="checkbox" (change)="ApproveOrRejectPatient($event, patient)" checked>
+                  <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes" id="ApproveRejectToggle"></span>
+                </label>
+                <label *ngIf="!patient.approve" class="custom-toggle custom-toggle-success">
+                  <input type="checkbox" (change)="ApproveOrRejectPatient($event, patient)" >
+                  <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes" id="ApproveRejectToggle"></span>
+                </label>
+              </td>
+              
+  
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

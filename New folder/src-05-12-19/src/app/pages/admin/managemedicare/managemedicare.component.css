@@ -1,0 +1,13 @@
+#descriptionCol{
+
+}
+
+.overflow{
+    width: 10rem;
+    white-space: nowrap;    
+    overflow: hidden;
+}
+
+.ellipsis{
+    text-overflow: ellipsis;
+}

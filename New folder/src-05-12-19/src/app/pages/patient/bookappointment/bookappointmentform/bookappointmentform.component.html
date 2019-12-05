@@ -1,0 +1,70 @@
+<div class="container-fluid bg-default" id="image_specs">
+
+
+  <div class="card my-2 mx-auto" id="signup_card">
+    <div class="card-header text-center">
+      <h1 id="heading" class="mb-0 heading">BOOK </h1>
+      <h1 id="green" class="mb-0 heading">APPOINTMENT</h1>
+    </div>
+    <div class="card-body">
+      <form class="needs-validation" id="bookAppointmentForm" [formGroup]="bookAppointmentForm">
+        <h6 class="heading-small text-muted mb-4">Appointment</h6>
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label" class="form-control-label" for="dateOfAppointment">Date Of Appointment</label>
+              <input type="date" class="form-control datepicker form-control-alternative" id="dateOfAppointment"
+                placeholder="Select Date Of Appointment" formControlName="dateOfAppointment" value="25/11/2019"
+                [ngClass]="{ 'is-invalid': submitted && f.dateOfAppointment.errors }">
+              <div *ngIf="submitted && f.dateOfAppointment.errors" class="invalid-feedback">
+                <div *ngIf="f.dateOfAppointment.errors.required">Date Of Appointment is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-control-label" for="selectTimeSlot">Select Time Slot</label>
+                <select id="selectTimeSlot" class="form-control form-control-alternative"
+                  formControlName="selectTimeSlot" [ngClass]="{ 'is-invalid': submitted && f.selectTimeSlot.errors }"
+                  placeholder="Select Time Slot">
+                  <option value="1">10am - 12pm</option>
+                  <option value="2">2pm - 4pm</option>
+                  <option value="3">6pm - 9pm</option>
+                </select>
+                <div *ngIf="submitted && f.selectTimeSlot.errors" class="invalid-feedback">
+                  <div *ngIf="f.selectTimeSlot.errors.required">Time Slot is required</div>
+                </div>
+              </div>
+
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button id="button1" class="btn btn-primary px-5 py-3" (click)="bookWithAgent()">
+              Book via Agent  {{medicare.amount*((100+agent.commission)/100) | currency: "INR"}}<br>
+            </button>
+            <div class="text-center">
+                <img id="icon_premium" src="../../assets/img/crown.png" class="avatar rounded-circle mt-2 mb-2"> <span id="punchLine" class="mt-2 mb-2">   Skip long waiting</span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <button id="button2" class="btn btn-primary px-5 py-3" (click)="book()">
+              Book Now {{medicare.amount | currency:"INR"}}
+            </button>
+          </div>
+
+        </div>
+      
+        <div id="popup" class="collapse in">
+          Hello
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+create schema `CLINIX`;
+
+CREATE  TABLE `CLINIX`.`patient` (
+  `patient_id` BIGINT(10) NOT NULL AUTO_INCREMENT ,
+  `first_name` VARCHAR(50) NOT NULL ,
+  `last_name` VARCHAR(50) NOT NULL ,
+  `age` INT(2) NOT NULL ,
+  `gender` VARCHAR(6) NULL ,
+  `date_of_birth` DATE NOT NULL ,
+  `contact_number` BIGINT(10) NOT NULL ,
+  `alt_contact_number` BIGINT(10) NULL ,
+  `email_id` VARCHAR(50) NOT NULL ,
+  `password` VARCHAR(15) NOT NULL ,
+  `address_line_1` VARCHAR(100) NOT NULL ,
+  `address_line_2` VARCHAR(100) NULL ,
+  `city` VARCHAR(50) NOT NULL ,
+  `state` INT NOT NULL ,
+  `zipcode` BIGINT(10) NOT NULL ,
+  `security_question` VARCHAR(60) NOT NULL, 
+  `security_question_answer` VARCHAR(50) NOT NULL,
+  `approve` VARCHAR(6) NOT NULL,
+  PRIMARY KEY (`patient_id`) );
+
+
+CREATE  TABLE `CLINIX`.`medicare_services` (
+  `medicare_service_id` BIGINT(10) NOT NULL AUTO_INCREMENT ,
+  `medicare_service` VARCHAR(50) NOT NULL ,
+  `service_description` VARCHAR(200) NOT NULL ,
+  `amount` BIGINT(10) NOT NULL ,
+  PRIMARY KEY (`medicare_service_id`) );
+
+
+
+CREATE  TABLE `CLINIX`.`doctor` (
+  `doctor_id` BIGINT(10) NOT NULL ,
+  `first_name` VARCHAR(50) NOT NULL,
+  `last_name` VARCHAR(50) NOT NULL,
+  `age` BIGINT(2) NOT NULL,
+  `gender` VARCHAR(10) NULL ,
+  `date_of_birth` DATE NULL ,
+  `contact_number` BIGINT(10) NOT NULL,
+  `alt_contact_number` BIGINT(10) NULL ,
+  `email_id` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(15) NOT NULL,
+  `address_line_1` VARCHAR(100) NOT NULL,
+  `address_line_2` VARCHAR(100) NULL ,
+  `city` VARCHAR(50) NOT NULL,
+  `state` VARCHAR(50) NOT NULL,
+  `zipcode` BIGINT(10) NOT NULL,
+  `degree` VARCHAR(50) NOT NULL,
+  `speciality` VARCHAR(50) NOT NULL,
+  `work_hours` VARCHAR(30) NOT NULL,
+  `hospital_name` VARCHAR(100) NOT NULL,
+  `security_question` VARCHAR(60) NOT NULL, 
+  `security_question_answer` VARCHAR(50) NOT NULL,
+  `medicare_services` BIGINT(10) NOT NULL,
+  `approve` VARCHAR(6) NOT NULL,
+  PRIMARY KEY (`doctor_id`) ,
+  INDEX `fk_medicare_services_id_idx` (`medicare_services` ASC) ,
+  CONSTRAINT `fk_medicare_services_id`
+    FOREIGN KEY (`medicare_services` )
+    REFERENCES `CLINIX`.`medicare_services` (`medicare_service_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE  TABLE `clinix`.`admin` (
+  `admin_id` BIGINT(10) NOT NULL AUTO_INCREMENT ,
+  `first_name` VARCHAR(50) NOT NULL ,
+  `last_name` VARCHAR(50) NOT NULL ,
+  `age` BIGINT(2) NOT NULL ,
+  `gender` VARCHAR(10) NOT NULL ,
+  `date_of_birth` DATE NOT NULL ,
+  `contact_number` BIGINT(10) NOT NULL ,
+  `alt_contact_number` BIGINT(10) NULL ,
+  `email_id` VARCHAR(50) NOT NULL ,
+  `password` VARCHAR(15) NOT NULL ,
+  `security_question` VARCHAR(60) NOT NULL ,
+  `security_question_answer` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`admin_id`) );
+
+
+
+CREATE  TABLE `clinix`.`agent` (
+  `agent_id` BIGINT(10) NOT NULL AUTO_INCREMENT ,
+  `first_name` VARCHAR(50) NOT NULL ,
+  `last_name` VARCHAR(50) NOT NULL ,
+  `age` BIGINT(2) NOT NULL ,
+  `gender` VARCHAR(10) NULL ,
+  `date_of_birth` DATE NULL ,
+  `contact_number` BIGINT(10) NOT NULL ,
+  `alt_contact_number` BIGINT(10) NULL ,
+  `email_id` VARCHAR(50) NOT NULL ,
+  `password` VARCHAR(15) NOT NULL ,
+  `address_line_1` VARCHAR(100) NOT NULL ,
+  `address_line_2` VARCHAR(100) NULL ,
+  `city` VARCHAR(50) NOT NULL ,
+  `state` VARCHAR(50) NOT NULL ,
+  `zipcode` BIGINT(10) NOT NULL ,
+  PRIMARY KEY (`agent_id`) );
+
+
+CREATE  TABLE `clinix`.`medical_test_history` (
+  `report_id` BIGINT(10) NOT NULL ,
+  `customer_id` BIGINT(10) NOT NULL ,
+  `doctor_id` BIGINT(10) NOT NULL ,
+  `medicare_services_id` BIGINT(10) NOT NULL ,
+  `agent_id` BIGINT(10) NOT NULL ,
+  `service_date` DATE NOT NULL ,
+  `test_result_date` DATE NOT NULL ,
+  `diag_actual_value_1` BIGINT(10) NOT NULL ,
+  `diag_normal_range_1` BIGINT(10) NOT NULL ,
+  `diag_actual_value_2` BIGINT(10) NULL ,
+  `diag_normal_range_2` BIGINT(10) NULL ,
+  `diag_actual_value_3` BIGINT(10) NULL ,
+  `diag_normal_range_3` BIGINT(10) NULL ,
+  `diag_actual_value_4` BIGINT(10) NULL ,
+  `diag_normal_range_4` BIGINT(10) NULL ,
+  `diag_actual_value_5` BIGINT(10) NULL ,
+  `diag_normal_range_5` BIGINT(10) NULL ,
+  `diag_actual_value_6` BIGINT(10) NULL ,
+  `diag_normal_range_6` BIGINT(10) NULL ,
+  `doctor_comments` VARCHAR(300) NULL ,
+  `other_info` VARCHAR(300) NOT NULL ,
+  PRIMARY KEY (`report_id`) ,
+  INDEX `fk_customer_id_idx` (`customer_id` ASC) ,
+  INDEX `fk_doctor_id_idx` (`doctor_id` ASC) ,
+  INDEX `fk_medicare_services_id_idx` (`medicare_services_id` ASC) ,
+  INDEX `fk_agent_id_idx` (`agent_id` ASC) ,
+  CONSTRAINT `fk_customer_id`
+    FOREIGN KEY (`customer_id` )
+    REFERENCES `clinix`.`patient` (`patient_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_doctor_id`
+    FOREIGN KEY (`doctor_id` )
+    REFERENCES `clinix`.`doctor` (`doctor_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_medicare_service_id`
+    FOREIGN KEY (`medicare_services_id` )
+    REFERENCES `clinix`.`medicare_services` (`medicare_service_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_agent_id`
+    FOREIGN KEY (`agent_id` )
+    REFERENCES `clinix`.`agent` (`agent_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE  TABLE `clinix`.`feedback` (
+  `question_id` BIGINT(10) NOT NULL AUTO_INCREMENT ,
+  `question` VARCHAR(200) NOT NULL ,
+  PRIMARY KEY (`question_id`) );
+
+
+CREATE  TABLE `clinix`.`user_feedback` (
+  `user_id` BIGINT(10) NOT NULL ,
+  `asessment_id` BIGINT(10) NOT NULL AUTO_INCREMENT ,
+  `rating_que_1` VARCHAR(200) NOT NULL ,
+  `rating_que_2` VARCHAR(200) NOT NULL ,
+  `rating_que_3` VARCHAR(200) NOT NULL ,
+  `rating_que_4` VARCHAR(200) NOT NULL ,
+  `rating_que_5` VARCHAR(200) NOT NULL ,
+  `rating_que_6` VARCHAR(200) NOT NULL ,
+  `rating_que_7` VARCHAR(200) NOT NULL ,
+  `rating_que_8` VARCHAR(200) NOT NULL ,
+  `rating_que_9` VARCHAR(200) NOT NULL ,
+  `rating_que_10` VARCHAR(200) NOT NULL ,
+  `assessment_date` DATE NOT NULL ,
+  PRIMARY KEY (`asessment_id`) );
